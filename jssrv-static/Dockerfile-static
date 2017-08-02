@@ -1,0 +1,4 @@
+FROM node:8.2
+RUN npm install -g json-server
+WORKDIR /myapp
+CMD ["json-server", "data/static-db.json", "--watch", "--routes", "data/static-routes.json", "--config", "data/json-server.json"]

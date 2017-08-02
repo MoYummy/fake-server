@@ -1,0 +1,4 @@
+{
+  "/static/*": "/$1",
+  "/articles\\?id=:id": "/posts/:id"
+}

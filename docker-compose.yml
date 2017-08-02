@@ -1,0 +1,24 @@
+version: '2'
+services:
+  proxy-server:
+    container_name: proxy-server
+    image: nginx:1.13
+    volumes:
+      - ./proxy-server/proxy.conf:/etc/nginx/conf.d/mysite.template
+    ports:
+      - 40001:80
+    environment:
+      - NGINX_PORT=80
+    links:
+      - "jssrv-static:static"
+    command: /bin/bash -c "envsubst < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+  jssrv-static:
+    container_name: jssrv-static
+    build:
+      context: ./jssrv-static
+      dockerfile: Dockerfile-static
+    hostname: static
+    ports:
+      - 40002:4000
+    volumes:
+      - ./jssrv-static/data:/myapp/data
